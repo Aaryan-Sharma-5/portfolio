@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+/* ── Design tokens ─────────────────────────────────────── */
+:root {
+  --background: #0A0A0C;
+  --foreground: #F7F7FB;
+  --accent:   #22D3EE;
+  --accent-2: #E879F9;
+  --accent-hover: #38E3FF;
+  --card-bg: rgba(255, 255, 255, 0.035);
+  --card-border: rgba(255, 255, 255, 0.10);
+  --card-border-hover: rgba(255, 255, 255, 0.20);
+  --muted: rgba(255, 255, 255, 0.45);
+  --muted-dim: rgba(255, 255, 255, 0.30);
+  --orb-1: #22D3EE;
+  --orb-2: #E879F9;
+  --orb-3: #6366F1;
+  --font-display: "Plus Jakarta Sans";
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-hover: var(--accent-hover);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-jakarta);
+  --font-mono: var(--font-jetbrains);
+  --font-display: var(--font-jakarta);
+}
+
+/* ── Reset ─────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+}
+html::-webkit-scrollbar { width: 8px; }
+html::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+/* ── Base ──────────────────────────────────────────────── */
+body {
+  position: relative;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* ── Font utilities ────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-jakarta), 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+.font-mono {
+  font-family: var(--font-jetbrains), 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ── Orb drift animations ──────────────────────────────── */
+@keyframes orb-drift-a {
+  0%   { transform: translate(0, 0)        scale(1); }
+  100% { transform: translate(40px, 30px)  scale(1.08); }
+}
+@keyframes orb-drift-b {
+  0%   { transform: translate(0, 0)         scale(1); }
+  100% { transform: translate(-50px, 25px)  scale(1.1); }
+}
+@keyframes orb-drift-c {
+  0%   { transform: translate(0, 0)         scale(1); }
+  100% { transform: translate(30px, -40px)  scale(0.95); }
+}
+
+/* ── Entry animations ──────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  opacity: 0;
+  animation: fade-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slide-up {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.slide-up {
+  transform: translateY(110%);
+  opacity: 0;
+  animation: slide-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes terminal-line {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.terminal-line {
+  animation: terminal-line 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Theme transition ─────────────────────────────────── */
+*, *::before, *::after {
+  transition-property: color, background-color, border-color, outline-color, box-shadow, fill, stroke;
+  transition-duration: 350ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* Don't override explicit durations on interactive elements */
+a, button, [role="button"], input, select, textarea,
+.tech-pill, .glass-card {
+  transition-duration: 200ms;
+}
+
+/* ── Selection ─────────────────────────────────────────── */
+::selection {
+  background: color-mix(in oklab, var(--accent) 35%, transparent);
+  color: white;
+}
+
+/* ── Focus ─────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 60%, transparent);
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ── Glass surface ─────────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    background 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(255, 255, 255, 0.20);
+  transform: translateY(-2px);
+}
+
+/* ── Accent text & gradient ────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--foreground),
+    var(--accent) 50%,
+    var(--accent-2)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Tech pill ─────────────────────────────────────────── */
+.tech-pill {
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.69rem;
+  font-family: var(--font-jetbrains), monospace;
+  color: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  transition: border-color 0.3s;
+}
+.tech-pill:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* ── Mono kicker label ─────────────────────────────────── */
+.kicker {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.69rem;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.kicker-accent {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.69rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ── Scrollbar — terminal (always hidden, scroll via wheel) ── */
+.terminal-scrollbar {
+  scrollbar-width: none;
+}
+.terminal-scrollbar::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none;
+}
+
+/* ── Glow pulse ────────────────────────────────────────── */
+.glow-pulse {
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 12px color-mix(in oklab, var(--accent) 40%, transparent); }
+  50%       { box-shadow: 0 0 28px color-mix(in oklab, var(--accent) 65%, transparent); }
+}
+
+/* ── Reduced motion ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
