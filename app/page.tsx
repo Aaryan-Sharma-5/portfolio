@@ -4,6 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { Analytics } from "@vercel/analytics/next";
 
 // Below-fold sections — split into separate JS chunks, loaded after critical paint
 const Projects       = dynamic(() => import("@/components/Projects").then((m) => ({ default: m.Projects })));
@@ -34,6 +35,7 @@ export default function Home() {
         <SectionDivider />
         <Contact />
         <Footer />
+        <Analytics />
       </div>
       <ThemeSwitcher />
     </main>

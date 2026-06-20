@@ -215,16 +215,16 @@ export const projects = [
     ],
     impact: [
       {
-        label: "Search Scope",
-        value: "25 files",
+        label: "Search Interface",
+        value: "Natural language → structured results",
         detail:
-          "Indexes and searches the sample Drive folder referenced in the project README.",
+          "Translates plain-English prompts into precise Google Drive queries — no query syntax required.",
       },
       {
-        label: "Coverage",
-        value: "7 subfolders",
+        label: "Continuity",
+        value: "Stateful follow-ups",
         detail:
-          "Navigates a nested Drive tree containing documents, spreadsheets, PDFs, images, and video files.",
+          "In-process session memory keeps multi-turn searches grounded and context-aware across a nested Drive tree.",
       },
     ],
     stack: [
@@ -987,10 +987,10 @@ export const projects = [
           "Tracks weather and air quality across major cities with regional comparison views.",
       },
       {
-        label: "Freshness",
-        value: "Every 10 minutes",
+        label: "Data Freshness",
+        value: "Sub-10 min live AQI",
         detail:
-          "Weather and AQI data are refreshed on a regular cadence for near-real-time monitoring.",
+          "Weather and AQI auto-refresh so readings are never more than 10 minutes stale — near-real-time monitoring.",
       },
     ],
     stack: [

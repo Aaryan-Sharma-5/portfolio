@@ -16,7 +16,7 @@ const jetbrains = JetBrains_Mono({
   weight: ["300", "400", "500", "600"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaryanz.xyz";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaryan-pied.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

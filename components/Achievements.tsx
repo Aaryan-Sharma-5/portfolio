@@ -230,8 +230,8 @@ export function Achievements() {
   const [paused, setPaused] = useState(false);
 
   const list = achievements as Achievement[];
-  // Triple the array so the loop is seamless at any viewport width
-  const track = [...list, ...list, ...list];
+  // Duplicate once (the minimum for a seamless marquee). The animation shifts by exactly one set's width, so the duplicate slides into the original's place with no visible jump. The second copy is decorative — hidden from AT.
+  const track = [...list, ...list];
 
   return (
     <section id="achievements" className="relative py-24 overflow-hidden">
@@ -277,12 +277,13 @@ export function Achievements() {
             }}
           >
             {track.map((award, i) => (
-              <AwardCard
-                key={`${award.title}-${i}`}
-                award={award}
-                metaIndex={i % list.length}
-                onClick={() => setLightbox(award)}
-              />
+              <div key={`${award.title}-${i}`} aria-hidden={i >= list.length}>
+                <AwardCard
+                  award={award}
+                  metaIndex={i % list.length}
+                  onClick={() => setLightbox(award)}
+                />
+              </div>
             ))}
           </div>
         </div>
